@@ -1,6 +1,6 @@
 {
   "name": "kodelet-dictate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local speech-to-text dictation extension for Kodelet",
   "type": "module",
   "main": "./dist/index.js",
@@ -60,6 +60,9 @@
     "access": "public"
   },
   "allowScripts": {
-    "esbuild": true
+    "esbuild@0.28.2": true,
+    "fsevents": false,
+    "kodelet@0.5.33-beta": true,
+    "koffi@3.1.5": true
   }
 }
