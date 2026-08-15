@@ -12,15 +12,15 @@ Install from npm:
 npm install -g kodelet-dictate --allow-scripts=kodelet-dictate
 ```
 
-You can also install directly from a Git repository or pinned commit. A persistent prefix keeps the installed package available to the generated wrapper without adding it to an unrelated project's dependencies:
+Or install directly from GitHub into a persistent prefix. This keeps the package available to the generated wrapper without adding it to an unrelated project's dependencies:
 
 ```bash
 mkdir -p ~/.local/share/kodelet-dictate
 npm install --prefix ~/.local/share/kodelet-dictate \
-  git+https://github.com/jingkaihe/kodelet-dictate.git#COMMIT
+  git+https://github.com/jingkaihe/kodelet-dictate.git
 ```
 
-npm runs the package's `prepare` build and then the same postinstall hook. Do not use `--ignore-scripts`; if your npm configuration restricts lifecycle scripts, allow the repository's resolved Git identity.
+Append `#COMMIT` to the GitHub URL to pin a specific commit. npm runs the package's `prepare` build and then the same postinstall hook. Do not use `--ignore-scripts`.
 
 The npm postinstall hook creates this plugin wrapper:
 
@@ -57,11 +57,10 @@ The interactive surfaces are currently available only in the native local Kodele
 
 ## Development
 
-From a checkout next to the Kodelet repository, build the local SDK and install dependencies:
+From a checkout, install dependencies and run the checks:
 
 ```bash
-(cd ../kodelet/sdk && npm install && npm run build)
-npm install --no-save ../kodelet/sdk
+KODELET_SKIP_DICTATE_PLUGIN_INSTALL=1 npm install
 npm run check
 npm run build
 ```

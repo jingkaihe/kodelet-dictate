@@ -48,6 +48,14 @@
     "whisper"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jingkaihe/kodelet-dictate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jingkaihe/kodelet-dictate/issues"
+  },
+  "homepage": "https://github.com/jingkaihe/kodelet-dictate#readme",
   "publishConfig": {
     "access": "public"
   },
