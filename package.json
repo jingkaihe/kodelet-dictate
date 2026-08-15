@@ -19,6 +19,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "tsx --test src/*.test.ts",
     "check": "npm run typecheck && npm test",
+    "release:check": "test -z \"$(git status --porcelain)\" && git fetch origin main --tags && test \"$(git rev-parse HEAD)\" = \"$(git rev-parse origin/main)\" && npm run check",
+    "release": "npm run release:check && git tag -a \"v$npm_package_version\" -m \"v$npm_package_version\" && git push origin \"v$npm_package_version\"",
     "install-extension": "npm run build && node dist/install.js",
     "prepare": "npm run build",
     "prepack": "npm run clean",

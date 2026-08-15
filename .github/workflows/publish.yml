@@ -1,8 +1,9 @@
 name: Publish to npm
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*"
 
 permissions:
   contents: read
@@ -19,7 +20,7 @@ jobs:
       KODELET_SKIP_DICTATE_PLUGIN_INSTALL: "1"
       KODELET_SKIP_MCP_PLUGIN_INSTALL: "1"
     steps:
-      - name: Check out release
+      - name: Check out tag
         uses: actions/checkout@v7
 
       - name: Set up Node.js
@@ -33,9 +34,9 @@ jobs:
         shell: bash
         run: |
           package_version="$(node -p "require('./package.json').version")"
-          release_version="${GITHUB_REF_NAME#v}"
-          if [[ "$release_version" != "$package_version" ]]; then
-            echo "::error::Release tag $GITHUB_REF_NAME does not match package version $package_version."
+          tag_version="${GITHUB_REF_NAME#v}"
+          if [[ "$tag_version" != "$package_version" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package version $package_version."
             exit 1
           fi
 

@@ -55,28 +55,6 @@ The first use asks for a preferred language and model. Model weights are downloa
 
 The interactive surfaces are currently available only in the native local Kodelet TUI. PvRecorder supports macOS on x64 and arm64, Linux on x64, and selected Raspberry Pi CPUs. Unsupported Linux arm64 systems report that the recorder backend is unavailable instead of attempting capture.
 
-## Development
-
-From a checkout, install dependencies and run the checks:
-
-```bash
-KODELET_SKIP_DICTATE_PLUGIN_INSTALL=1 npm install
-npm run check
-npm run build
-```
-
-Install the development build into the global Kodelet plugin directory:
-
-```bash
-npm run install-extension
-```
-
-Create the publishable tarball:
-
-```bash
-npm pack
-```
-
 ## Uninstall
 
 ```bash
