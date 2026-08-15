@@ -1,0 +1,57 @@
+{
+  "name": "kodelet-dictate",
+  "version": "0.1.0",
+  "description": "Local speech-to-text dictation extension for Kodelet",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "kodelet-dictate-install": "dist/install.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test src/*.test.ts",
+    "check": "npm run typecheck && npm test",
+    "install-extension": "npm run build && node dist/install.js",
+    "prepare": "npm run build",
+    "prepack": "npm run clean",
+    "postinstall": "node -e \"const fs=require('fs');const p='./dist/install.js';if(fs.existsSync(p))import(p).catch(e=>{console.error(e);process.exit(1)})\""
+  },
+  "dependencies": {
+    "@huggingface/hub": "2.15.0",
+    "@picovoice/pvrecorder-node": "1.2.9",
+    "kodelet": "^0.5.33-beta",
+    "opencc-js": "^1.4.1",
+    "transcribe-cpp": "0.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "kodelet",
+    "extension",
+    "dictation",
+    "speech-to-text",
+    "transcription",
+    "whisper"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}
