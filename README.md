@@ -9,18 +9,29 @@ Requirements: Kodelet 0.5.33-beta or newer, Node.js 22 or newer, and a supported
 Install from npm:
 
 ```bash
-npm install -g kodelet-dictate --allow-scripts=kodelet-dictate
+KODELET_SKIP_MCP_PLUGIN_INSTALL=1 \
+npm install -g kodelet-dictate \
+  --allow-scripts=kodelet-dictate,kodelet,koffi \
+  --strict-allow-scripts
 ```
 
-Or install directly from GitHub into a persistent prefix. This keeps the package available to the generated wrapper without adding it to an unrelated project's dependencies:
+The allowlist permits Dictate to create its plugin wrapper and `koffi` to prepare the native transcription bridge. The Kodelet package's lifecycle script is covered by the policy but skips its unrelated MCP plugin installation.
+
+To install directly from GitHub, keep a persistent checkout because the generated wrapper points to its compiled files:
 
 ```bash
-mkdir -p ~/.local/share/kodelet-dictate
-npm install --prefix ~/.local/share/kodelet-dictate \
-  git+https://github.com/jingkaihe/kodelet-dictate.git
+git clone https://github.com/jingkaihe/kodelet-dictate.git \
+  ~/.local/share/kodelet-dictate
+(
+  cd ~/.local/share/kodelet-dictate
+  KODELET_SKIP_DICTATE_PLUGIN_INSTALL=1 \
+  KODELET_SKIP_MCP_PLUGIN_INSTALL=1 \
+    npm ci --strict-allow-scripts
+  npm run install-extension
+)
 ```
 
-Append `#COMMIT` to the GitHub URL to pin a specific commit. npm runs the package's `prepare` build and then the same postinstall hook. Do not use `--ignore-scripts`.
+Check out a release tag or commit before `npm ci` to pin the GitHub installation. Do not use `--ignore-scripts`.
 
 The npm postinstall hook creates this plugin wrapper:
 
@@ -59,5 +70,6 @@ The interactive surfaces are currently available only in the native local Kodele
 
 ```bash
 npm uninstall -g kodelet-dictate
-rm -rf ~/.kodelet/plugins/kodelet@dictate
+rm -rf ~/.local/share/kodelet-dictate \
+  ~/.kodelet/plugins/kodelet@dictate
 ```

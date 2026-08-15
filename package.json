@@ -1,6 +1,6 @@
 {
   "name": "kodelet-dictate",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local speech-to-text dictation extension for Kodelet",
   "type": "module",
   "main": "./dist/index.js",
