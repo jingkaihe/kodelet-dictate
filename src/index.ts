@@ -68,7 +68,7 @@ type ActiveOperation = {
 let activeOperation: ActiveOperation | undefined;
 
 const extension = defineExtension((ext) => {
-  ext.setMetadata({ name: "dictate", version: "0.1.0" });
+  ext.setMetadata({ name: "dictate", version: "0.1.4" });
 
   ext.registerCommand({
     name: "dictate",
@@ -77,6 +77,11 @@ const extension = defineExtension((ext) => {
     timeoutInSec: 0,
     execute: async (_input, ctx) =>
       runExclusive("dictation", ctx, (operation) => runDictation(ctx, operation)),
+  });
+
+  ext.registerShortcut("ctrl+alt+r", {
+    description: "Start dictation",
+    handler: () => ({ action: "submit", message: "/dictate" }),
   });
 
   ext.registerCommand({

@@ -4,7 +4,7 @@ Local speech-to-text dictation for the native Kodelet TUI. Audio is recorded and
 
 ## Installation
 
-Requirements: Kodelet 0.5.33-beta or newer, Node.js 22 or newer, and a supported microphone backend.
+Requirements: Kodelet 0.5.39-beta or newer, Node.js 22 or newer, and a supported microphone backend.
 
 Install from npm:
 
@@ -57,6 +57,7 @@ Restart running Kodelet sessions after installation or upgrades.
 ## Usage
 
 - Run `/dictate` to start recording.
+- Press `Ctrl+Alt+R` to start recording from the native chat TUI.
 - Press `Enter` to stop recording and transcribe locally, or `Esc` to cancel.
 - Review and edit the transcription before submitting it as the next agent prompt.
 - Press `Ctrl+R` in the review editor to record more speech and append it to the edited transcription.
