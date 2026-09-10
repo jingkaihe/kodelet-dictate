@@ -64,7 +64,7 @@
   "allowScripts": {
     "esbuild@0.28.2": true,
     "fsevents": false,
-    "kodelet@0.5.39-beta": true,
+    "kodelet@0.6.3-beta": true,
     "koffi@3.1.5": true
   }
 }
