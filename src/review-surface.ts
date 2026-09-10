@@ -26,10 +26,13 @@ export class DictationReviewSurface {
   private resolveOutcome!: (outcome: ReviewOutcome) => void;
   private removeInput?: () => void;
   private removeResize?: () => void;
+  private removeClose?: () => void;
   private removeAbort?: () => void;
 
   constructor(
-    private readonly surface: UISurface,
+    private readonly surface: UISurface & {
+      onClose?(handler: () => void): () => void;
+    },
     initialText: string,
     private readonly signal: AbortSignal,
   ) {
@@ -52,6 +55,13 @@ export class DictationReviewSurface {
     const onAbort = () => this.finish({ kind: "discard" });
     this.signal.addEventListener("abort", onAbort, { once: true });
     this.removeAbort = () => this.signal.removeEventListener("abort", onAbort);
+    this.removeClose = this.surface.onClose?.(() => {
+      this.closed = true;
+      this.detach();
+      this.finish({ kind: "discard" });
+    });
+    // The host can close between openSurface returning and this subscription.
+    if (this.closed) this.removeClose?.();
     if (this.signal.aborted) this.finish({ kind: "discard" });
     this.render();
   }
@@ -80,6 +90,7 @@ export class DictationReviewSurface {
     this.detached = true;
     this.removeInput?.();
     this.removeResize?.();
+    this.removeClose?.();
     this.removeAbort?.();
   }
 

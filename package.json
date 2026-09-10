@@ -1,6 +1,6 @@
 {
   "name": "kodelet-dictate",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Local speech-to-text dictation extension for Kodelet",
   "type": "module",
   "main": "./dist/index.js",
@@ -29,7 +29,7 @@
   "dependencies": {
     "@huggingface/hub": "2.15.0",
     "@picovoice/pvrecorder-node": "1.2.9",
-    "kodelet": "^0.5.39-beta",
+    "kodelet": "^0.6.3-beta",
     "opencc-js": "^1.4.1",
     "transcribe-cpp": "0.1.3"
   },

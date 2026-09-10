@@ -237,6 +237,7 @@ async function captureTranscription(
     capture = new MicrophoneCapture(selectedMicrophone(configured.microphone));
     surfaceDisplay = new DictationSurface(surface, operation.abort, signal);
     surfaceDisplay.start(capture);
+    signal.throwIfAborted();
     capture.onError = (error) =>
       surfaceDisplay?.fail(new Error(microphoneFailureMessage(error)));
 

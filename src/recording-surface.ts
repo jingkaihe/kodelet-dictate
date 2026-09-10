@@ -31,12 +31,15 @@ export class DictationSurface {
   private resolveOutcome!: (outcome: RecordingOutcome) => void;
   private removeInput?: () => void;
   private removeResize?: () => void;
+  private removeClose?: () => void;
   private removeAbort?: () => void;
   private timer?: NodeJS.Timeout;
   private capture?: MicrophoneCapture;
 
   constructor(
-    private readonly surface: UISurface,
+    private readonly surface: UISurface & {
+      onClose?(handler: () => void): () => void;
+    },
     private readonly abortController: AbortController,
     private readonly signal: AbortSignal,
   ) {
@@ -58,6 +61,13 @@ export class DictationSurface {
     this.signal.addEventListener("abort", onAbort, { once: true });
     this.removeAbort = () => this.signal.removeEventListener("abort", onAbort);
     this.timer = setInterval(() => this.render(), 200);
+    this.removeClose = this.surface.onClose?.(() => {
+      this.closed = true;
+      this.detach();
+      this.cancel();
+    });
+    // A late subscriber is notified synchronously when the host already closed.
+    if (this.closed) this.removeClose?.();
     if (this.signal.aborted) this.finish({ kind: "cancel" });
     this.render();
   }
@@ -112,6 +122,7 @@ export class DictationSurface {
     if (this.timer) clearInterval(this.timer);
     this.removeInput?.();
     this.removeResize?.();
+    this.removeClose?.();
     this.removeAbort?.();
     if (this.capture) {
       this.capture.onFrame = undefined;
