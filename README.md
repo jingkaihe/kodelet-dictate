@@ -4,7 +4,7 @@ Local speech-to-text dictation for the native Kodelet TUI. Audio is recorded and
 
 ## Installation
 
-Requirements: Kodelet 0.5.39-beta or newer, Node.js 22 or newer, and a supported microphone backend.
+Requirements: Kodelet 0.6.3-beta or newer, Node.js 22 or newer, and a supported microphone backend.
 
 Install from npm:
 
